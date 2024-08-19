@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${dmsans.className} relative scroll-smooth antialiased`}
+        className={`${dmsans.className} relative scroll-smooth bg-primary-green-light antialiased`}
       >
         <ActiveLinkProvider>
           <Navbar />

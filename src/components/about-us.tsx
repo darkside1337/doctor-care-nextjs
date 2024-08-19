@@ -4,6 +4,18 @@ import AboutUsImage from "@/assets/about-us.png";
 import { SectionType } from "@/lib/types";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
+import { motion } from "framer-motion";
+
+const sectionVariants = {
+  hidden: {
+    opacity: 0,
+    x: -50,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+  },
+};
 
 const AboutUs = ({ id, setActiveLinkId }: SectionType) => {
   const { ref: aboutUsRef, inView } = useInView({
@@ -16,10 +28,18 @@ const AboutUs = ({ id, setActiveLinkId }: SectionType) => {
     }
   }, [id, inView, setActiveLinkId]);
   return (
-    <section
+    <motion.section
       id={id}
       ref={aboutUsRef}
       className="bg-primary-beige py-[200px] lg:py-[320px]"
+      /* framer motion stuff */
+      variants={sectionVariants}
+      initial="hidden"
+      whileInView="visible"
+      transition={{
+        duration: 0.5,
+      }}
+      viewport={{ once: true, amount: 0.5 }}
     >
       <MaxWidthWrapper className="flex flex-col items-center gap-[60px] lg:flex-row lg:gap-[68px]">
         <div className="lg:order-2">
@@ -47,7 +67,7 @@ const AboutUs = ({ id, setActiveLinkId }: SectionType) => {
           className="lg:order-1"
         />
       </MaxWidthWrapper>
-    </section>
+    </motion.section>
   );
 };
 

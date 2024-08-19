@@ -1,14 +1,27 @@
+"use client";
+
 import { SectionType } from "@/lib/types";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import MaxWidthWrapper from "./max-width-wrapper";
 import Checkmark from "@/assets/checkmark.svg";
-
+import { motion } from "framer-motion";
+import { useMediaQuery } from "@uidotdev/usehooks";
 interface ServiceType {
   id?: number;
   title: string;
   body: string;
 }
+const sectionVariants = {
+  hidden: {
+    opacity: 0,
+    x: -50,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+  },
+};
 
 const ServiceCardsData: ServiceType[] = [
   {
@@ -57,6 +70,8 @@ function ServiceCard({ title, body }: ServiceType) {
   );
 }
 const Services = ({ id, setActiveLinkId }: SectionType) => {
+  const isMediumToSmallDevice = useMediaQuery("(max-width: 1024px)");
+
   const { ref: servicesRef, inView } = useInView({
     threshold: 0.4,
   });
@@ -75,20 +90,31 @@ const Services = ({ id, setActiveLinkId }: SectionType) => {
       className="bg-primary-green-light-02 pt-[calc(273px_+_100px)] lg:pt-[calc(105px_+_160px)]"
     >
       <MaxWidthWrapper>
-        <div className="text-center">
-          <p className="text-sm font-bold tracking-[0.08rem] text-primary-green">
-            SERVIÇOS
-          </p>
-          <h2 className="mx-auto max-w-[550px] text-[30px] font-bold text-secondary-gray-headline lg:text-[40px]">
-            Como podemos ajudá-lo a se sentir melhor?
-          </h2>
-        </div>
-        {/* service cards */}
-        <div className="mt-[76px] grid grid-cols-1 gap-[32px] md:grid-cols-2 md:gap-[36px] lg:mt-[64px] lg:grid-cols-3 lg:gap-[40px]">
-          {ServiceCardsData.map(({ id, title, body }) => (
-            <ServiceCard key={id} title={title} body={body} />
-          ))}
-        </div>
+        <motion.div
+          /* framer motion stuff */
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          transition={{
+            duration: 0.5,
+          }}
+          viewport={{ once: true, amount: isMediumToSmallDevice ? 0.2 : 0.4 }}
+        >
+          <div className="text-center">
+            <p className="text-sm font-bold tracking-[0.08rem] text-primary-green">
+              SERVIÇOS
+            </p>
+            <h2 className="mx-auto max-w-[550px] text-[30px] font-bold text-secondary-gray-headline lg:text-[40px]">
+              Como podemos ajudá-lo a se sentir melhor?
+            </h2>
+          </div>
+          {/* service cards */}
+          <div className="mt-[76px] grid grid-cols-1 gap-[32px] md:grid-cols-2 md:gap-[36px] lg:mt-[64px] lg:grid-cols-3 lg:gap-[40px]">
+            {ServiceCardsData.map(({ id, title, body }) => (
+              <ServiceCard key={id} title={title} body={body} />
+            ))}
+          </div>
+        </motion.div>
       </MaxWidthWrapper>
     </section>
   );

@@ -6,6 +6,18 @@ import WhatsAppIcon from "@/assets/whatsapp.svg";
 import HeroImage from "@/assets/hero-image.png";
 import Image from "next/image";
 import MaxWidthWrapper from "./max-width-wrapper";
+import { motion } from "framer-motion";
+
+const sectionVariants = {
+  hidden: {
+    opacity: 0,
+    x: -50,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+  },
+};
 
 //
 
@@ -19,10 +31,18 @@ const Hero = ({ id, setActiveLinkId }: SectionType) => {
     }
   }, [id, inView, setActiveLinkId]);
   return (
-    <section
+    <motion.section
       ref={heroRef}
       id={id}
       className="bg-primary-green-light pb-[197px] pt-[40px] lg:mt-0 lg:pb-[105px]"
+      /* framer motion stuff */
+      variants={sectionVariants}
+      initial="hidden"
+      whileInView="visible"
+      transition={{
+        duration: 0.5,
+      }}
+      viewport={{ once: true }}
     >
       <MaxWidthWrapper className="relative">
         <div className="relative grid grid-cols-1 gap-[50px] lg:grid-cols-2">
@@ -79,7 +99,7 @@ const Hero = ({ id, setActiveLinkId }: SectionType) => {
           </div>
         </div>
       </MaxWidthWrapper>
-    </section>
+    </motion.section>
   );
 };
 
