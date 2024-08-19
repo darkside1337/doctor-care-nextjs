@@ -6,7 +6,7 @@ import { useInView } from "react-intersection-observer";
 import MaxWidthWrapper from "./max-width-wrapper";
 import Checkmark from "@/assets/checkmark.svg";
 import { motion } from "framer-motion";
-import { useMediaQuery } from "@uidotdev/usehooks";
+import { useMediaQuery } from "./hooks";
 interface ServiceType {
   id?: number;
   title: string;
@@ -69,9 +69,9 @@ function ServiceCard({ title, body }: ServiceType) {
     </div>
   );
 }
+
 const Services = ({ id, setActiveLinkId }: SectionType) => {
   const isMediumToSmallDevice = useMediaQuery("(max-width: 1024px)");
-
   const { ref: servicesRef, inView } = useInView({
     threshold: 0.4,
   });

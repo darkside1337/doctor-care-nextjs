@@ -1,5 +1,4 @@
 "use client";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import { SectionType } from "@/lib/types";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
@@ -11,6 +10,7 @@ import MapIcon from "@/assets/map-pin.svg";
 import MailIcon from "@/assets/mail.svg";
 import MaxWidthWrapper from "./max-width-wrapper";
 import { motion } from "framer-motion";
+import { useMediaQuery } from "./hooks";
 //
 const sectionVariants = {
   hidden: {
